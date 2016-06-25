@@ -1,3 +1,5 @@
+//test是使用mocha运行的  mocha test.js
+
 var app = require('./app');
 var request = require('supertest').agent(app.listen());
 var assert = require('assert');

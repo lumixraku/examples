@@ -1,4 +1,7 @@
 
+
+
+/*set Accept and Content-Type */
 var koa = require('koa');
 var app = module.exports = koa();
 
@@ -75,11 +78,12 @@ app.use(function *(next){
 // try $ GET /tobi
 // try $ GET /loki
 
+
 app.use(function *(){
   var name = this.path.slice(1);
   var user = users[name];
   this.body = user;
 });
 
-if (!module.parent) app.listen(3000);
 
+if (!module.parent) app.listen(3000);

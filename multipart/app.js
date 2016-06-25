@@ -5,6 +5,8 @@
  * as it handles file descriptor limits whereas this does not.
  */
 
+
+/*测试文件上传*/
 var os = require('os');
 var path = require('path');
 var koa = require('koa');
@@ -24,7 +26,7 @@ app.use(function *(){
   var tmpdir = path.join(os.tmpdir(), uid());
 
   // make the temporary directory
-  yield fs.mkdir(tmpdir);
+  yield fs.mkdir(tmpdir); //co的fs  其回调函数应该是通过next() 将data返回给yield
 
   // list of all the files
   var files = [];
@@ -32,17 +34,20 @@ app.use(function *(){
 
   // yield each part as a stream
   var part;
-  while (part = yield parts) {
+  part = yield parts;
+  while (part) {
     // filename for this part
     files.push(file = path.join(tmpdir, part.filename));
     // save the file
-    yield saveTo(part, file);
+    var rs = yield saveTo(part, file);
+    console.log(rs);
+    part = yield parts;
   }
 
   // return all the filenames as an array
   // after all the files have finished downloading
   this.body = files;
-})
+});
 
 if (!module.parent) app.listen(3000);
 

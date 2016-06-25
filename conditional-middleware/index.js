@@ -16,7 +16,7 @@ function ignoreAssets(mw) {
     } else {
       // must .call() to explicitly set the receiver
       // so that "this" remains the koa Context
-      yield mw.call(this, next);
+      yield mw.call(this, next);  //yield 之后可以接 next  OR  koa组件?
     }
   }
 }
@@ -27,9 +27,12 @@ function ignoreAssets(mw) {
 // $ curl http://localhost:3000/some.html
 
 app.use(ignoreAssets(logger()));
-
 app.use(function *(){
   this.body = 'Hello World';
 });
 
 app.listen(3000);
+
+
+// var app = koa()
+// app.use(logger())

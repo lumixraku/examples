@@ -15,4 +15,5 @@ app.use(function *(next){
   this.body = { name: body.name.toUpperCase() };
 });
 
+//test
 if (!module.parent) app.listen(3000);

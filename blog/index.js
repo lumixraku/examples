@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -8,11 +7,19 @@ var logger = require('koa-logger');
 var route = require('koa-route');
 var parse = require('co-body');
 var koa = require('koa');
+
 var app = koa();
+
+// render
+var views = require('co-views');
+var render = views(__dirname + '/views', {
+  map: { html: 'swig' }
+});
+
 
 // "database"
 
-var posts = [];
+var posts = []; //简单的demo 所有的posts都保存在内存中
 
 // middleware
 
@@ -32,6 +39,7 @@ app.use(route.post('/post', create));
  */
 
 function *list() {
+  //render是koa模块的函数
   this.body = yield render('list', { posts: posts });
 }
 

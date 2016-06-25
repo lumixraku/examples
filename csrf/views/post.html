@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script src="//cdn.bootcss.com/jquery/2.2.0/jquery.js"></script>
+<div class="" id="csrf">{{ csrf }}</div>
+<script>
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        xhr.setRequestHeader("X-CSRFToken", $('#csrf').html());
+    }
+});
+
+$.post('http://localhost:3000/post', {
+    'name': 'haha',
+}, function (rs) {
+    rs = rs || {};
+    console.log(rs);
+});
+
+</script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 var app = require('./app');
 var fs = require('fs');
+var should = require('should');
 var request = require('supertest').agent(app.listen());
 
 // https://github.com/mscdex/busboy/blob/master/test/test-types-multipart.js
@@ -35,12 +36,11 @@ describe('Multipart Files', function () {
     .expect(200)
     .end(function (err, res) {
       if (err) return done(err);
-
       var files = res.body;
+      console.log(files);
       files.should.have.length(2);
       fs.stat(files[0], function (err) {
         if (err) return done(err);
-
         fs.stat(files[1], done);
       })
     })

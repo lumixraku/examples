@@ -13,6 +13,7 @@ var app = module.exports = koa();
 app.keys = ['key1', 'key2'];
 app.use(session(app));
 
+//get的时候取走数据
 app.use(function *(next){
   if (this.method !== 'GET' || this.path !== '/messages') return yield next;
 
@@ -24,6 +25,7 @@ app.use(function *(next){
   delete this.session.messages;
 })
 
+//post的时候添加数据
 app.use(function *(next){
   if (this.method !== 'POST' || this.path !== '/messages') return yield next;
 
